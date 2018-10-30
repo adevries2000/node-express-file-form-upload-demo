@@ -1,7 +1,5 @@
 #!/bin/bash
 apt-get update
-git clone https://github.com/abhishekparekh1/node-express-file-form-upload-demo.git
-ls
 cd node-express-file-form-upload-demo/
 apt-get install -y apache2
 mkdir /var/www/html/uploads
