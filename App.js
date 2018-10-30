@@ -27,7 +27,7 @@
 
       //specify destination
       destination: function(req, file, next){
-        next(null, './public/photo-storage');
+        next(null, '/var/www/html/uploads');
       },
 
       //specify the filename to be unique
@@ -70,7 +70,7 @@
       //Here is where I could add functions to then get the url of the new photo
       //And relocate that to a cloud storage solution with a callback containing its new url
       //then ideally loading that into your database solution.   Use case - user uploading an avatar...
-      res.send('Complete! Check out your public/photo-storage folder.  Please note that files not encoded with an image mimetype are rejected. <a href="index.html">try again</a>');
+      res.send('Complete! Check out your <IP>/uploads folder.  Please note that files not encoded with an image mimetype are rejected. <a href="index.html">try again</a>');
   }
 
 );
