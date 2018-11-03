@@ -14,9 +14,8 @@
 
   <div class="jumbotron">
     <div class="container text-center">
-      <h1>Express App File Uploads</h1>
+      <h1>Dairy Science Cloud Processing Engine</h1>
       <p>An example that uploads a user's file to your local server.</p>
-      <p>Read more online at: <a href="https://medium.com/@Moonstrasse/how-to-make-a-basic-html-form-file-upload-using-multer-in-an-express-node-js-app-16dac2476610">Blog Post </a></p>
     </div>
   </div>
 
@@ -31,16 +30,16 @@
   <div class="container text-center">
       <div class="col-sm-12">
         <div class="form">
-          <h1>Upload a photo!</h1>
+          <h1>Upload an Excel Sheet</h1>
 
-           <!-- IMAGE UPLOAD FORM -->
+           <!-- FILE UPLOAD FORM -->
           <form action="/upload" enctype="multipart/form-data" method="POST">
 
-                <div class="section">Note: Only image files are allowed.</div>
+                <div class="section">Note: Only Excel Sheets are allowed.</div>
                 <div class="inner-wrap">
-                  <label><input type="file" id="photo" name="photo" /></label>
+                  <label><input type="file" id="excel-sheet" name="excel-sheet" /></label>
                   <div class="button-section">
-                    <input type="submit" name="Upload" value="Upload Photo"/>
+                    <input type="submit" name="Upload" value="Upload File"/>
                   </div>
                 </div>
 

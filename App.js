@@ -27,7 +27,7 @@
 
       //specify destination
       destination: function(req, file, next){
-        next(null, './public/photo-storage');
+        next(null, '/var/www/html/uploads');
       },
 
       //specify the filename to be unique
@@ -36,7 +36,7 @@
         //get the file mimetype ie 'image/jpeg' split and prefer the second value ie'jpeg'
         const ext = file.mimetype.split('/')[1];
         //set the file fieldname to a unique name containing the original name, current datetime and the extension.
-        next(null, file.fieldname + '-' + Date.now() + '.'+ext);
+        next(null, file.originalname);
       }
     }),
 
@@ -46,15 +46,15 @@
             next();
           }
 
-        // only permit image mimetypes
-        const image = file.mimetype.startsWith('image/');
-        if(image){
-          console.log('photo uploaded');
+        // only permit xlsx mimetypes
+        const xlfile = file.mimetype.startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        if(xlfile){
+          console.log('Excel Sheet uploaded');
           next(null, true);
         }else{
           console.log("file not supported")
           //TODO:  A better message response to user on failure.
-          return next();
+        return next();
         }
     }
   };
@@ -65,8 +65,9 @@
   app.get('/', function(req, res){
     res.render('index.html');
   });
+  
 
-  app.post('/upload', multer(multerConfig).single('photo'),function(req, res){
+  app.post('/upload', multer(multerConfig).single('excel-sheet'),function(req, res){
       //Here is where I could add functions to then get the url of the new photo
       //And relocate that to a cloud storage solution with a callback containing its new url
       //then ideally loading that into your database solution.   Use case - user uploading an avatar...
