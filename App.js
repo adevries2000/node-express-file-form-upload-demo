@@ -71,7 +71,7 @@
       //Here is where I could add functions to then get the url of the new photo
       //And relocate that to a cloud storage solution with a callback containing its new url
       //then ideally loading that into your database solution.   Use case - user uploading an avatar...
-      res.send('Complete! Check out your public/photo-storage folder.  Please note that files not encoded with an image mimetype are rejected. <a href="index.html">try again</a>');
+      res.send('Complete! Navigate to the URL  <IP>/uploads. To Upload more files or Try Again <a href="index.html">Click Here</a>');
   }
 
 );
