@@ -27,7 +27,7 @@
 
       //specify destination
       destination: function(req, file, next){
-        next(null, '/var/www/html/uploads');
+        next(null, './public/uploads');
       },
 
       //specify the filename to be unique
@@ -71,7 +71,7 @@
       //Here is where I could add functions to then get the url of the new photo
       //And relocate that to a cloud storage solution with a callback containing its new url
       //then ideally loading that into your database solution.   Use case - user uploading an avatar...
-      res.send('Complete! Navigate to the URL  <IP>/uploads. To Upload more files or Try Again <a href="index.html">Click Here</a>');
+      res.send('Complete! Navigate to  <a href="/uploads">Here</a>. To Upload more files or Try Again <a href="index.html">Click Here</a>');
   }
 
 );
