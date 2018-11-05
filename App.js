@@ -46,9 +46,20 @@
             next();
           }
 
-        // only permit xlsx mimetypes
+        // only permit csv mimetypes
         const xlfile = file.mimetype.startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        if(xlfile){
+
+	const csv1 = file.mimetype.startsWith('text/plain');
+	const csv2 = file.mimetype.startsWith('text/x-csv');
+	const csv3 = file.mimetype.startsWith('application/vnd.ms-excel');
+	const csv4 = file.mimetype.startsWith('application/csv');
+	const csv5 = file.mimetype.startsWith('application/x-csv');
+	const csv6 = file.mimetype.startsWith('text/csv');
+	const csv7 = file.mimetype.startsWith('text/comma-separated-values');
+	const csv8 = file.mimetype.startsWith('text/x-comma-separated-values');
+	const csv9 = file.mimetype.startsWith('text/tab-separated-values');
+
+        if(xlfile||csv1||csv2||csv3||csv4||csv5||csv6||csv7||csv8||csv9){
           console.log('Excel Sheet uploaded');
           next(null, true);
         }else{
