@@ -61,13 +61,27 @@
 
         if(xlfile||csv1||csv2||csv3||csv4||csv5||csv6||csv7||csv8||csv9){
           console.log('Excel Sheet uploaded');
-          next(null, true);
+          next(null,file.originalname);
         }else{
           console.log("file not supported")
           //TODO:  A better message response to user on failure.
         return next();
         }
-    }
+    },
+
+     javacode: function(req, file, next){
+        var exec = require('child_process').exec, child;
+        child = exec('/home/ubuntu/node-express-file-form-upload-demo/jdk1.8.0_191/bin/java Hello ./input.txt ./output.txt 1 2 3 4 5 6',
+        function (error, stdout, stderr){
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if(error !== null){
+          console.log('exec error: ' + error);
+        }
+    });
+    next(null,true);
+}
+
   };
 
 
