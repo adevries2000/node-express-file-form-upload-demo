@@ -1,15 +1,9 @@
-import java.io.*;
-public class Hello {
-	public static void main(String... args) {
-		try(FileReader in = new FileReader(args[0]);FileWriter out = new FileWriter(args[1])){
-			for(int i=0;i<args.length;i++) {
-				out.write(args[i]+"\n");
-			}
-		}
-		
-		catch(Exception e) {
-			e.printStackTrace();
+public class Hello{
+	public static void main(String...args){
+		System.out.println("Hello from Java in Node JS");
+		int i=0;
+		while(i<args.length){
+			System.out.println(args[i]);i++;
 		}
 	}
 }
-

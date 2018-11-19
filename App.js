@@ -9,7 +9,7 @@
   const express = require('express');
   const multer = require('multer');
   const bodyParser = require('body-parser');
-
+  var f = ' ';
   // SETUP APP
   const app = express();
   const port = process.env.PORT || 3000;
@@ -48,40 +48,26 @@
 
         // only permit csv mimetypes
         const xlfile = file.mimetype.startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
-	const csv1 = file.mimetype.startsWith('text/plain');
-	const csv2 = file.mimetype.startsWith('text/x-csv');
-	const csv3 = file.mimetype.startsWith('application/vnd.ms-excel');
-	const csv4 = file.mimetype.startsWith('application/csv');
-	const csv5 = file.mimetype.startsWith('application/x-csv');
-	const csv6 = file.mimetype.startsWith('text/csv');
-	const csv7 = file.mimetype.startsWith('text/comma-separated-values');
-	const csv8 = file.mimetype.startsWith('text/x-comma-separated-values');
-	const csv9 = file.mimetype.startsWith('text/tab-separated-values');
+      	const csv1 = file.mimetype.startsWith('text/plain');
+      	const csv2 = file.mimetype.startsWith('text/x-csv');
+      	const csv3 = file.mimetype.startsWith('application/vnd.ms-excel');
+      	const csv4 = file.mimetype.startsWith('application/csv');
+      	const csv5 = file.mimetype.startsWith('application/x-csv');
+      	const csv6 = file.mimetype.startsWith('text/csv');
+      	const csv7 = file.mimetype.startsWith('text/comma-separated-values');
+      	const csv8 = file.mimetype.startsWith('text/x-comma-separated-values');
+      	const csv9 = file.mimetype.startsWith('text/tab-separated-values');
 
         if(xlfile||csv1||csv2||csv3||csv4||csv5||csv6||csv7||csv8||csv9){
           console.log('Excel Sheet uploaded');
-          next(null,file.originalname);
+          f = file.originalname;
+          next(null, true);
         }else{
           console.log("file not supported")
           //TODO:  A better message response to user on failure.
         return next();
         }
-    },
-
-     javacode: function(req, file, next){
-        var exec = require('child_process').exec, child;
-        child = exec('/home/ubuntu/node-express-file-form-upload-demo/jdk1.8.0_191/bin/java Hello ./input.txt ./output.txt 1 2 3 4 5 6',
-        function (error, stdout, stderr){
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if(error !== null){
-          console.log('exec error: ' + error);
-        }
-    });
-    next(null,true);
-}
-
+    }
   };
 
 
@@ -96,7 +82,8 @@
       //Here is where I could add functions to then get the url of the new photo
       //And relocate that to a cloud storage solution with a callback containing its new url
       //then ideally loading that into your database solution.   Use case - user uploading an avatar...
-      res.send('Complete! Navigate to  <a href="/uploads">Here</a>. To Upload more files or Try Again <a href="index.html">Click Here</a>');
+      pleaseSolve(req.body, res);
+      // res.send('Complete! Navigate to  <a href="/uploads">Here</a>. To Upload more files or Try Again <a href="index.html">Click Here</a>');
   }
 
 );
@@ -105,3 +92,25 @@
   app.listen(port,function(){
     console.log(`Server listening on port ${port}`);
   });
+
+
+  function pleaseSolve(parms, res) {
+    //get the parameters based on input name attribute from the html
+    //and parse strings to numbers
+    // var m = +parms.param1;
+    // var o = +parms.param2;
+    // var p = +parms.param3;
+
+    var exec = require('child_process').exec, child;    
+    child = exec('java Hello ./public/uploads/'+ f+' ' + parms.param1 +' '+ parms.param2+' '+ parms.param3,
+          function (error, stdout, stderr){
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if(error !== null){
+              console.log('exec error: ' + error);
+            }
+        });
+
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end("The entered parameters are " + parms.param1 + " " + parms.param2+ " "  + parms.param3 );
+  }
