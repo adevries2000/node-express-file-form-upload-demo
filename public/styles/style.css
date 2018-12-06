@@ -1,4 +1,4 @@
- <style>
+<style>
     /* Remove the navbar's default rounded borders and increase the bottom margin */
     .navbar {
       margin-bottom: 50px;
@@ -206,4 +206,3 @@
     .slidertextdiv {
         float: right;
     }
-      
