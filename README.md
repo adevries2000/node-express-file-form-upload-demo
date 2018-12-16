@@ -1,4 +1,4 @@
-# UF Dairy Cloud Processing Engime
+# UF Dairy Cloud Processing Engine
 This is a repo as standalone EC2 deployment to process data in the cloud by Univerity of Florida Animal Science Department.   
 
 ### Node.js Solution Dependencies
