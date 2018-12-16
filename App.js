@@ -1,10 +1,3 @@
-/***************************************************************
-  node.js express app file form server upload w/ Multer demo
-  App created by:  Jesse Lewis
-  Multer Config used based on tutorial by Ashish Mehra via Youtube
-  @ https://www.youtube.com/watch?v=sMnqnvW81to&lc=z23htp54jwmhwni0nacdp43axbwhgu3y3fg0jwzwhatw03c010c
-******************************************************************************************************/
-
   // RUN PACKAGES
   const express = require('express');
   const multer = require('multer');
@@ -19,28 +12,27 @@
 
 
 
-  //MULTER CONFIG: to get file photos to temp server storage
+  //MULTER CONFIG: to get files to temp server storage
   const multerConfig = {
 
     //specify diskStorage (another option is memory)
     storage: multer.diskStorage({
 
-      //specify destination
+      //specify destination: Local Directory where the files will reside
       destination: function(req, file, next){
         next(null, './public/uploads');
       },
 
-      //specify the filename to be unique
       filename: function(req, file, next){
         console.log(file);
-        //get the file mimetype ie 'image/jpeg' split and prefer the second value ie'jpeg'
+        //get the file mimetype ie 'csv' split
         const ext = file.mimetype.split('/')[1];
-        //set the file fieldname to a unique name containing the original name, current datetime and the extension.
+        //set the file fieldname to be the original name
         next(null, file.originalname);
       }
     }),
 
-    // filter out and prevent non-image files.
+    // filter out and prevent non-csv files.
     fileFilter: function(req, file, next){
           if(!file){
             next();
@@ -73,22 +65,22 @@
 
   /* ROUTES
   **********/
+
+  // index.html is the page displayes when the user types URL. This corresponds to HTTP GET request
   app.get('/', function(req, res){
     res.render('index.html');
   });
   
-
+  // This responds to HTTP POST request when a file is uploaded
   app.post('/upload', multer(multerConfig).single('excel-sheet'),function(req, res){
-      //Here is where I could add functions to then get the url of the new photo
-      //And relocate that to a cloud storage solution with a callback containing its new url
-      //then ideally loading that into your database solution.   Use case - user uploading an avatar...
+      //The business logic that processes the file
       pleaseSolve(req.body, res);
       // res.send('Complete! Navigate to  <a href="/uploads">Here</a>. To Upload more files or Try Again <a href="index.html">Click Here</a>');
   }
 
 );
 
-  // RUN SERVER
+  // RUN SERVER and listen to the port 3000
   app.listen(port,function(){
     console.log(`Server listening on port ${port}`);
   });
@@ -101,7 +93,7 @@
     // var o = +parms.param2;
     // var p = +parms.param3;
 
-    var exec = require('child_process').exec, child;    
+    var exec = require('child_process').exec, child;   // Starting the java child process to run the java code to process excel sheet 
     child = exec('java -jar HerdManagement.jar ./public/uploads/'+ f +' ./public/uploads/output-' + f,
           function (error, stdout, stderr){
             console.log('stdout: ' + stdout);
