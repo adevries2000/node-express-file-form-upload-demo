@@ -94,7 +94,7 @@
     // var p = +parms.param3;
 
     var exec = require('child_process').exec, child;   // Starting the java child process to run the java code to process excel sheet 
-    child = exec('java -jar HerdManagement.jar ./public/uploads/'+ f +' ./public/uploads/output-' + f,
+    child = exec('java -jar HerdManagement.jar ./public/uploads/'+ f +' ./public/uploads/output-' + f + " " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  +     parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10,
           function (error, stdout, stderr){
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
@@ -103,7 +103,12 @@
             }
         });
 
+    // child2 = exec(' echo "http://" > temp.txt)
+    // child3 = exec(' curl http://169.254.169.254/latest/meta-data/public-ipv4 > temp1.txt'') 
+
+
+
     res.writeHead(200, { 'Content-Type': 'text/html' });
     // var pathofoutput = '18.191.166.171/uploads/output-' + f;
-    res.end("The Output File can be downloaded from <a href=http://18.191.166.171/uploads/>here</a>" + "The entered parameters are " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  + parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10 );
+    res.end("The Output File can be downloaded from <a href=/uploads/>here</a>" + " Copy Paste: http://18.221.107.11/uploads/output-"+f +"        "+ "The entered parameters are " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  + parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10 );
   }
