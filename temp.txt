@@ -1,5 +1,0 @@
-18.221.107.11
-res.end("The Output File can be downloaded from <a href=http://
-18.191.166.171
-/uploads/>here</a>" + "The entered parameters are " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  + parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10 );
-
