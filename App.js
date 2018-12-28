@@ -3,12 +3,25 @@
   const multer = require('multer');
   const bodyParser = require('body-parser');
   var f = ' ';
+  var fs = require('fs');
+  var metadata = require('node-ec2-metadata');
+  var ip = '';
+metadata.getMetadataForInstance('public-ipv4')
+.then(function(ipv4) {
+    console.log("Instance ID: " + ipv4);
+    ip = ipv4;
+})
+.fail(function(error) {
+    console.log("Error: " + error);
+});
   // SETUP APP
   const app = express();
   const port = process.env.PORT || 3000;
   app.use(bodyParser.urlencoded({extended:false}));
   app.use(bodyParser.json());
   app.use('/', express.static(__dirname + '/public'));
+
+
 
 
 
@@ -93,8 +106,23 @@
     // var o = +parms.param2;
     // var p = +parms.param3;
 
-    var exec = require('child_process').exec, child;   // Starting the java child process to run the java code to process excel sheet 
-    child = exec('java -jar HerdManagement.jar ./public/uploads/'+ f +' ./public/uploads/output-' + f,
+    var exec = require('child_process').exec, child, child3, child4, child5, child6;   // Starting the java child process to run the java code to process excel sheet 
+    
+     child3 = exec('cat ./public/index_response-1.html > ./public/index_response.html');
+   var outputLink = '<a href="http://'+ip+'/uploads/output-' + f +'">Download</a>'
+
+     child2 = exec('echo "' +outputLink+'" >> ./public/index_response.html');
+
+     // child5 = exec('echo "'+ parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  +     parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10+'">> ./public/index_response.html');
+
+
+     child4 = exec ('cat ./public/index_response-2.html >> ./public/index_response.html');
+
+
+     child6 = exec('echo "Done"');
+
+
+    child = exec('java -jar HerdManagement.jar ./public/uploads/'+ f +' ./public/uploads/output-' + f + " " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  +     parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10,
           function (error, stdout, stderr){
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
@@ -102,8 +130,35 @@
               console.log('exec error: ' + error);
             }
         });
+     
+   // var outputLink = '<a href="http://18.191.164.204/uploads/output-' + f +'">Download</a>'
+    
+//    var outputLink = 'sed -i \'229s/.*/ \'<a href="http://18.191.164.204/uploads/output-\''+f+'\'">Download</a>\'/' /home/ubuntu/node-express-file-form-upload-demo/public/index_response.html'
 
+
+  //  var outputLink = 'sed -i \'229s/.*/this-is-the-test/\' /home/ubuntu/node-express-file-form-upload-demo/public/index_response.html'
+
+     // child2 = exec('echo "' +outputLink+'" > outputfile.txt');
+
+     // child3 = exec('cat ./public/index_response-1.html > ./public/index_response.html');
+
+     // child2 = exec('echo "' +outputLink+'" >> ./public/index_response.html');
+
+     // // child5 = exec('echo "'+ parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  +     parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10+'">> ./public/index_response.html');
+
+
+     // child4 = exec ('cat ./public/index_response-2.html >> ./public/index_response.html');
+
+
+     // child6 = exec('echo "Done"');
+
+
+    //child2 = exec(outputLink);
+    // child3 = exec(' curl http://169.254.169.254/latest/meta-data/public-ipv4 > temp1.txt'') 
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    // var pathofoutput = '18.191.166.171/uploads/output-' + f;
-    res.end("The Output File can be downloaded from <a href=http://18.191.166.171/uploads/>here</a>" + "The entered parameters are " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  + parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10 );
-  }
+
+
+    // res.end("The Output File can be downloaded from <a href=http://18.191.166.171/uploads/>here</a>" + "The entered parameters are " + parms.param + " " + parms.param2+ " "  + parms.param3 + " "  + parms.param4 + " "  + parms.param5 + " "  + parms.param6+ " "  + parms.param7+ " "  + parms.param8+ " "  + parms.param9+ " "  + parms.param10 );
+    // res.end(outputLink);
+    fs.createReadStream('public/index_response.html').pipe(res);
+    }
